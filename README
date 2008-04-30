@@ -1,0 +1,63 @@
+= Page Event
+
+Created by Marty Haught, January 2008
+
+Page Event is a simple page-based event calendar for associating time-based events with your Radiant pages.  The original example was setting up meeting announcements in radiant where the meeting was a page.  Having this meeting show up on a site-wide calendar and having exact information on when the meeting was taking place was important.
+
+
+INSTALLATION
+
+1) Install Shards extension (unless it's already installed)
+
+svn export http://svn.radiantcms.org/radiant/trunk/extensions/shards/ vendor/extensions/shards
+
+
+2) Add the extensions config to environment.rb
+	config.extensions = [ :shards, :all ]
+	
+
+3) Install the Calendar Date Select plugin with the following command:
+
+svn export http://calendardateselect.googlecode.com/svn/tags/calendar_date_select vendor/plugins/calendar_date_select
+
+I may slurp this plugin up inside Page Event at some point but for now I'll just leave it in its normal plugin form.  You can read more about it here:
+http://code.google.com/p/calendardateselect/ 
+
+
+2) Install the Page Event Extension
+
+
+
+
+3) run migration
+
+rake radiant:extensions:page_event:migrate
+
+4) run rake update for extension
+
+rake radiant:extensions:page_event:update
+
+
+ 
+
+Tags:
+
+List out the tags you can use with short descriptions
+
+
+The main tag you'll use is the monthly calendar tag:
+
+<r:calendar />
+
+It will produce the current month's view with any events during the time.  The calendar also has previous and next month navigation.
+
+
+For a specific event page you can access the date and time aspects of the event through these tags:
+<r:event>
+  Date: <r:date />
+  Time: <r:time />
+</r:event>
+
+You can also do the tags inline such as: <r:event:time />
+
+There currently are no options for any of the tags.  As this extension matures and gets used beyond a single site options will begin to appear.

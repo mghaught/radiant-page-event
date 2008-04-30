@@ -1,0 +1,21 @@
+
+class PageEventExtension < Radiant::Extension
+  version "0.1"
+  description "Allows you to add event dates to your pages that can be viewed on a site-wide calendar"
+  url "http://martyhaught.com"
+  
+  define_routes do |map|
+    map.connect 'admin/page_events/:action', :controller => 'page_events'
+  end
+
+  def activate
+		Page.send :include, PageEvent::PageExtensions
+		Page.send :include, PageEventTags
+		admin.page.edit.add :layout_row, "edit_page_event"
+    admin.tabs.add "Page Events", "/admin/page_events", :after => "Pages", :visibility => [:all]
+  end
+  
+  def deactivate
+    admin.tabs.remove "Page Events"
+  end
+end

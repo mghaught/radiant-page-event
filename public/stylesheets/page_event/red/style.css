@@ -1,0 +1,134 @@
+/* @group Base Styles */
+
+* {
+	margin: 0;
+	padding: 0;
+}
+#content {
+	text-align: center;
+}
+
+/* @end */
+
+/* @group Calendar Setup */
+
+.calendar {
+	margin: 0 auto;
+}
+.calendar tbody {
+	text-align: left;
+}
+.calendar, .calendar td, .calendar th {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+.calendar td, .calendar th {
+	font: 76%/1 "Lucida Grande", Verdana;
+}
+.calendar td {
+	width: 9em;
+	height: 9em;
+}
+.calendar th {
+	font-weight: bold;
+}
+.calendar abbr {
+	border: none;
+	cursor: help;
+}
+.calendar .day {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+}
+.date {
+	position: absolute;
+	top: 0px;
+	border-style: solid;
+	border-color: #000;
+	border-width: 0 1px 1px 0;
+	padding: .2em 0;
+	width: 2em;
+	height: 1.1em;
+	text-align: center;
+	background: #666;
+	color: #ddd;
+}
+
+/* @end */
+
+/* @group Basic Calendar Styling */
+
+.monthHeader {
+	font-size: 1.3em;
+	text-transform: uppercase;
+	background: #FF0000;
+}
+.dayName {
+	background: #A3210B;
+	color: #fff;
+}
+.dayName th {
+	padding: .2em;
+}
+.monthLink a {
+	display: block;
+	text-decoration: none;
+	cursor: pointer;
+	color: #fff;
+	padding: .2em 0;
+}
+
+/* @end */
+
+/* @group Events */
+
+.eventContainer {
+	padding: 2.5em 3px 3px;
+	font-size: 80%;
+	line-height: 1.2;
+}
+.event {
+	margin: 0 0 .75em 1em;
+	text-indent: -1em;
+}
+.time {
+	background: #fcff00;
+	text-transform: lowercase;
+	padding: .1em .2em;
+}
+
+/* @end */
+
+/* @group Day Types */
+
+.weekend .day {
+	background: #ddd;
+}
+.otherMonth .day {
+	background: url(/images/page_event/other_month_bg.gif);
+}
+.otherMonth .date {
+	border-color: #555;
+	background: url(/images/page_event/other_month_date_bg.gif);
+	color: #333;
+}
+.specialDay .day {
+	background: #fff2f2;
+}
+.today .day {
+	background: #fcff00;
+}
+.today .date {
+	background: #afaf00;
+	font-weight: bold;
+	border-color: #171604;
+	color: #171604;
+}
+.today .time {
+	background: #f00;
+	color: #fff;
+}
+
+/* @end */

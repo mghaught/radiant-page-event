@@ -1,0 +1,75 @@
+<%= calendar_date_select_includes('red') %>
+<div class="popup" id="add-page-event-popup" style="display: none">
+  <div id="busy" class="busy" style="display: none"><%= image 'spinner.gif' %></div>
+  <h3>Add Event Date</h3>
+  <% form_remote_tag(
+    :url => page_add_part_url,
+    :update => "pages", 
+    :position => :bottom, 
+    :loading => 'event_loading()', 
+    :complete => 'event_added()',
+    :condition => 'valid_event()'
+  ) do %> 
+    <div>
+		<%
+			event_name = @page.page_event ? @page.page_event.name : ""
+			event_location = @page.page_event ? @page.page_event.location : ""
+			event_date = @page.page_event ? @page.page_event.datetime.strftime("%m/%d/%Y %I:%M %p") : ""
+		%>
+      <%= hidden_field_tag 'page_event[page_id]', @page.id, :id => 'page-id-field' %>
+      Name: <%= text_field_tag "page[page_event][name]", event_name, :id => 'event-name-field', :maxlength => 100 %><br> 
+			Date: <%= calendar_date_select_tag "page_event[datetime]", event_date, :time => :mixed %><br>
+      Location: <%= text_field_tag "page_event[location]", event_location, :id => 'event-location-field', :maxlength => 100 %><br> 
+      <%= submit_tag "Add Event", :id => 'add-event-button' %>
+    </div>
+    <p><%= link_to_function 'Close', "$(this).up('.popup').hide()", :class => 'close-link' %></p>
+  <% end %>
+</div>
+
+<script>
+<% content_for :page_scripts do %>
+
+function toggle_add_page_event_popup() {
+  var popup = $('add-page-event-popup');
+  var eventNameField = $('event-name-field');
+  center(popup);
+  Element.toggle(popup);
+  Field.focus(eventNameField);
+}
+function event_loading() {
+  $('add-event-button').disabled = true;
+  $('busy').appear();
+}
+function event_added() {
+  var partNameField = $('part-name-field');
+  var partIndexField = $('part-index-field');
+  var index = parseInt(partIndexField.value) + 1;
+  var tab = 'tab-' + index;
+  var caption = partNameField.value;
+  var page = 'page-' + index;
+  tabControl.addTab(tab, caption, page);
+  Element.hide('add-part-popup');
+  Element.hide('busy');
+  partNameField.value = '';
+  partIndexField.value = (index + 1).toString();
+  $('add-part-button').disabled = false;
+  Field.focus(partNameField);
+  tabControl.select(tab);
+}
+<% end %>
+</script>
+
+<style>
+<% content_for :page_css do %>
+  #page_expires_on, #page_appears_on { position: relative; }
+  div.date_selector {  }
+  table.calendar { background: white; border: 1px solid black; }
+  table.calendar td { padding: 2px; border: 1px solid #eee; background: white; text-align: right;}
+  table.calendar .back, table.calendar .forward { background: #ddd; }
+  table.calendar .month_label { background: #eee; }
+  table.calendar a { text-decoration: none; color: black; }
+  table.calendar td.today { border-color: red; }
+  table.calendar td.today a { color: red; }
+  table.calendar td.selected { background: #ddd; font-weight: bold; border-color: black; border-width: 2px; }
+<% end %>
+</style>

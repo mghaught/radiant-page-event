@@ -1,0 +1,63 @@
+<link href="/stylesheets/calendar/red/style.css" media="screen" rel="Stylesheet" type="text/css" />
+  <style type="text/css">
+div.calendar_day_display {
+	padding-left: 2px;
+	width: 100%;
+	margin-top: -1px;
+	background-color: #CCC;
+	text-align: left;
+}
+
+p.event {
+	font-size: 8pt;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+
+p.event a {
+	text-decoration: none;
+	padding: 0;
+	margin: 0;
+	text-align: left;
+}
+
+span.event_date {
+	font-size: 7pt;
+}
+  </style>
+
+
+<h1>Page Events for <%= @date.strftime("%B") %></h1>
+
+<%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})",:date => @last_month.to_s(:db))%> | 
+<%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})",:date => @next_month.to_s(:db))%>
+<table id="site-map" class="index" summary="Page hierarchy of the current site">
+  <thead>
+    <tr>
+      <th class="page">Page</th>
+      <th class="status">Status</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+	<% unless @current_events.empty?
+		@current_events.each do |event| -%>
+		<tr>
+			<td><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><%= event.title %></a></td> 
+			<td><%= event.status.name %></td> 
+			<td><%= event.event_datetime.strftime("%m/%d/%Y %I:%M %p") %></td>
+		</tr>
+	<% end
+	else -%>
+  <tr>
+    <td colspan="4" class="note">No Pages</td>
+  </tr>
+	<% end -%>
+  </tbody>
+</table>
+
+
+
+
+
