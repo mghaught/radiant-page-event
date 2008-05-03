@@ -15,10 +15,10 @@ module PageEventTags
 	end
 
 	tag	"calendar" do |tag|
-		params = tag.locals.page.request.params
+		params = tag.locals.page.request.parameters
 
 		begin
-			selected_date = params["date"].first.to_time if params["date"]
+			selected_date = params["date"].to_time if params["date"]
 		rescue
 			logger.error "Date param, #{params["date"]}, did not parse correctly" 
 		end

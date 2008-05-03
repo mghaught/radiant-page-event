@@ -26,38 +26,53 @@ http://code.google.com/p/calendardateselect/
 
 2) Install the Page Event Extension
 
+git clone git://github.com/mghaught/radiant-page-event.git vendor/extensions/page_event
 
+If you don't want the git information you can always delete the .git directory under page_event for now.  I will release this as a zip/tarball in the future as well as consider other options, such as gem.
 
 
 3) run migration
 
-rake radiant:extensions:page_event:migrate
+rake production radiant:extensions:page_event:migrate
+
 
 4) run rake update for extension
 
 rake radiant:extensions:page_event:update
 
 
- 
-
-Tags:
-
-List out the tags you can use with short descriptions
+5) Start (or restart) your server
 
 
-The main tag you'll use is the monthly calendar tag:
+USAGE
+
+The extension will create a new column on the pages table to store an optional event timestamp.  The admin create/edit page interface will now have an Event Date field with pop-up calendar widget that will allow you to set a date and time that represents an event.  This page will now be associated with that time.  Additionally, there is a page event admin tab next to pages tab that will give you a month's view of events.  It also have next and previous month navigation.  The current UI is basic so look forward to it being enhanced.
+
+For displaying these events on your radiant pages you can choose from several tags.  The main tag you'll use is the monthly calendar tag:
 
 <r:calendar />
 
-It will produce the current month's view with any events during the time.  The calendar also has previous and next month navigation.
+It will produce the current month's view with any events during the time.  The calendar also has previous and next month navigation.  A default set of css styles are provided in the following file:
 
+<RADIANT_ROOT>/public/stylesheets/page_event/red/style.css
 
-For a specific event page you can access the date and time aspects of the event through these tags:
+In order to make use of this stylesheet you'll need to add it to the pages that will use the calendar tag.  
+
+When it comes to accessing a specific page's event data you can use the following tags:
+
 <r:event>
   Date: <r:date />
   Time: <r:time />
 </r:event>
 
-You can also do the tags inline such as: <r:event:time />
+OR
 
-There currently are no options for any of the tags.  As this extension matures and gets used beyond a single site options will begin to appear.
+<r:event:date />
+<r:event:time />
+
+They will simply output the date or time, respectively, in a human formatted version.  There currently are no options for any of the tags.  As this extension matures and gets used beyond a single site options will begin to appear.
+
+
+FUTURE RELEASES
+
+In the immediate future, I will focus styling and bug fixes.  There are several refactoring opportunities as well as UI enhancements on both sides that might happen.  The biggest change I'm anticipating is upgrading the event data from a simple timestamp to a true model with time ranges.  Feedback welcome!
