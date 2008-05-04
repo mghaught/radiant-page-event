@@ -7,6 +7,9 @@ Page Event is a simple page-based event calendar for associating time-based even
 
 INSTALLATION
 
+NOTE: The extension is tested against 6.6 though it might work for some of the older 6 releases.  I have no intention of adding support for any release prior to 6.6.  The following instructions assume you have Radiant 6.6 installed and configured properly.
+
+
 1) Install Shards extension (unless it's already installed)
 
 svn export http://svn.radiantcms.org/radiant/trunk/extensions/shards/ vendor/extensions/shards
@@ -29,6 +32,8 @@ http://code.google.com/p/calendardateselect/
 git clone git://github.com/mghaught/radiant-page-event.git vendor/extensions/page_event
 
 If you don't want the git information you can always delete the .git directory under page_event for now.  I will release this as a zip/tarball in the future as well as consider other options, such as gem.
+
+** Github has a download button that will give you a tarball of the extension.  If you don't want to use git then go this route and expand the tarball in the vend0r/extensions/page_event directory of your Radiant app.
 
 
 3) run migration

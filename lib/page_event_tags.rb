@@ -27,7 +27,7 @@ module PageEventTags
 		
 		prev_month = selected_date - 1.month
 		next_month = selected_date + 1.month		
-		events_by_date = events_for(selected_date)
+		events_by_date = events_for(selected_date) # TODO - needs to limit events to the published status
 		
 		Date::MONTHNAMES[selected_date.mon]
 
