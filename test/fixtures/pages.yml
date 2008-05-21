@@ -7,7 +7,7 @@ homepage:
   status_id: 100
   parent_id:
   published_at: 2007-10-30 04:45:27 
-  event_datetime: <%= Time.now.to_s(:db) %>
+  event_datetime: <%= 5.minutes.from_now.to_s(:db) %>
 non_event_page:
   id: 2
   title: No Event Here
