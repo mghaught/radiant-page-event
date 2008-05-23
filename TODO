@@ -1,8 +1,10 @@
-Next Release
-6.7 compatibility
+--Next Release--
+events_by_month get a published only option for calendar
+tag descriptions
 spec conversion
+
+--Future Releases--
 Optional scope for published/hidden on events_by_month
-RDoc
 Extract Calendar to class that admin and public side can use
 Make Page Event tab attractive :)
 Develop PageEvent model to handle a range of time for an event

@@ -7,19 +7,9 @@ Page Event is a simple page-based event calendar for associating time-based even
 
 INSTALLATION
 
-NOTE: The extension is tested against 6.6 though it might work for some of the older 6 releases.  I have no intention of adding support for any release prior to 6.6.  The following instructions assume you have Radiant 6.6 installed and configured properly.
+NOTE: The extension is tested against 6.6 and 6.7 though it might work for some of the older 6 releases.  If you use a version older than 6.7 you'll need the shards extension installed and configured properly.  I have no intention of adding support for any release prior to 6.6.  The following instructions assume you have Radiant 6.7 installed and configured properly.
 
-
-1) Install Shards extension (unless it's already installed)
-
-svn export http://svn.radiantcms.org/radiant/trunk/extensions/shards/ vendor/extensions/shards
-
-
-2) Add the extensions config to environment.rb
-	config.extensions = [ :shards, :all ]
-	
-
-3) Install the Calendar Date Select plugin with the following command:
+1) Install the Calendar Date Select plugin with the following command:
 
 svn export http://calendardateselect.googlecode.com/svn/tags/calendar_date_select vendor/plugins/calendar_date_select
 
