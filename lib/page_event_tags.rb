@@ -5,12 +5,26 @@ module PageEventTags
 	tag "event" do |tag|
 		tag.expand if tag.locals.page.event_datetime_start
 	end
-
+	
+  desc %{
+	  Renders the start date of the page event.
+	  
+	  *Usage*:
+	  
+	  <pre><code><r:event:date [format="%B %e, %Y"] /></pre></code>
+	}
 	tag "event:date" do |tag|
 	  format = tag.attr['format'] || "%m/%d/%Y"
 		tag.locals.page.event_datetime_start.strftime(format) if tag.locals.page.event_datetime_start
 	end
   
+  desc %{
+	  Renders the start time of the page event.
+	  
+	  *Usage*:
+	  
+	  <pre><code><r:event:date [format="%I:%M %p"] /></pre></code>
+	}
 	tag "event:time" do |tag|
 	  format = tag.attr['format'] || "%I:%M %p"
 		tag.locals.page.event_datetime_start.strftime(format) if tag.locals.page.event_datetime_start
