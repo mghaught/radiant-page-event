@@ -3,15 +3,43 @@ module PageEventTags
   include PageEvent::CalendarSupport
 
 	tag "event" do |tag|
-		tag.expand if tag.locals.page.event_datetime
+		tag.expand if tag.locals.page.event_datetime_start
 	end
 
 	tag "event:date" do |tag|
-		tag.locals.page.event_datetime.strftime("%m/%d/%Y") if tag.locals.page.event_datetime
+	  format = tag.attr['format'] || "%m/%d/%Y"
+		tag.locals.page.event_datetime_start.strftime(format) if tag.locals.page.event_datetime_start
 	end
   
 	tag "event:time" do |tag|
-		tag.locals.page.event_datetime.strftime("%I:%M %p") if tag.locals.page.event_datetime
+	  format = tag.attr['format'] || "%I:%M %p"
+		tag.locals.page.event_datetime_start.strftime(format) if tag.locals.page.event_datetime_start
+	end
+	
+	desc %{
+	  Renders the start and end datetimes of the page event. If the event starts and ends on the same day the end date is not displayed.
+	  If the event starts and ends at the same time, only the start date is rendered.
+	  
+	  *Usage*:
+	  
+	  <pre><code><r:event:duration [date_format="%B %e, %Y"] [time_format="%I:%M %p"] /></pre></code>
+	}
+	tag "event:duration" do |tag|
+	  if tag.locals.page.event_datetime_start
+  	  date_format = tag.attr['date_format'] || "%m/%d/%Y"
+  	  time_format = tag.attr['time_format'] || "%I:%M %p"
+	    result = tag.locals.page.event_datetime_start.strftime(date_format)
+	    result << ' '
+		  result << tag.locals.page.event_datetime_start.strftime(time_format)
+		  if tag.locals.page.event_datetime_start < tag.locals.page.event_datetime_end
+		    result << '&ndash;'
+		    if tag.locals.page.event_datetime_start.to_date < tag.locals.page.event_datetime_end.to_date
+		      result << tag.locals.page.event_datetime_end.strftime(date_format)
+		      result << ' '
+	      end
+	      result << tag.locals.page.event_datetime_end.strftime(time_format)
+      end
+	  end
 	end
 	
 	tag "events:next" do |tag|
@@ -97,7 +125,7 @@ module PageEventTags
 										html.div(:class => "eventContainer") do
 											events_by_date[day].each do |event|
 												html.p(:class => "event") do
-													html.span(event.event_datetime.strftime("%I:%M %p"), :class => "time") 
+													html.span(event.event_datetime_start.strftime("%I:%M %p"), :class => "time") 
 													html.a(event.title, :href => event.url) 	
 												end
 											end
