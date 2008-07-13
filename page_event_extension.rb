@@ -1,6 +1,6 @@
 
 class PageEventExtension < Radiant::Extension
-  version "0.1"
+  version "0.2"
   description "Allows you to add event dates to your pages that can be viewed on a site-wide calendar"
   url "http://martyhaught.com"
   

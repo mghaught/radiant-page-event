@@ -5,9 +5,12 @@ module PageEvent::PageExtensions
   end	
 
   module ClassMethods
-		def events_by_month(date = Time.now)
+		def events_by_month(date = Time.now, status = nil)
 			month_start = date.at_beginning_of_month
-			Page.find(:all,:conditions => "event_datetime #{(month_start .. month_start.next_month - 1.minute).to_s(:db)}")		
+			condition_str = "event_datetime #{(month_start .. month_start.next_month - 1.minute).to_s(:db)}"
+			condition_str << " AND status_id = #{status}"  if status
+			
+			Page.find(:all,:conditions => condition_str)		
 		end
 		
 		def event_count_by_month(date = Time.now)

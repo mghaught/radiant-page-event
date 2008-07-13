@@ -1,32 +1,80 @@
 module PageEventTags
   include Radiant::Taggable
   include PageEvent::CalendarSupport
+  
 
+	desc %{
+    Will conditionally output its content if the current page has an event.
+    
+    *Usage:*
+    <pre><code><r:event>...</r:event></code></pre>
+  }
 	tag "event" do |tag|
 		tag.expand if tag.locals.page.event_datetime
 	end
 
+# TODO do we need a to_date for any reason?
+	desc %{
+	  Will output the current event's date in the default format of MM/DD/YYYY, such as 07/15/2008
+  
+	  *Usage:*
+	  <pre><code><r:event:date /></code></pre>
+	}
 	tag "event:date" do |tag|
 		tag.locals.page.event_datetime.strftime("%m/%d/%Y") if tag.locals.page.event_datetime
 	end
+	
+	desc %{
+	  Will output the current event's time in the default format of HH:MM PM, such as 08:30 PM
   
+	  *Usage:*
+	  <pre><code><r:event:time /></code></pre>
+	}  
 	tag "event:time" do |tag|
 		tag.locals.page.event_datetime.strftime("%I:%M %p") if tag.locals.page.event_datetime
 	end
 	
+	tag "events" do |tag|
+		tag.expand
+	end
+	
+  desc %{
+    Returns the page with the next occurring event. Inside this tag all page attribute tags are mapped to
+    the this page. 
+    
+    *Usage:*
+    <pre><code><r:events:next>...</r:events:next></code></pre>
+  }	
 	tag "events:next" do |tag|
 		if next_event = Page.next_event
       tag.locals.page = next_event
       tag.expand
     end
 	end	
-	
+
+  desc %{
+    Gives access to next three upcoming events' pages.
+    
+    *Usage:*
+    <pre><code><r:events:upcoming>...</r:events:upcoming></code></pre>
+  }
 	tag "events:upcoming" do |tag|
     tag.locals.events = Page.upcoming_events
     tag.expand
 	end	
-	
+
+  desc %{
+    Cycles through each of the upcoming events. Inside this tag all page attribute tags
+    are mapped to the current event's page.
+    
+    *Usage:*
+    <pre><code><r:events:upcoming:each>
+     ...
+    </r:events:upcoming:each>
+    </code></pre>
+  }	
 	tag "events:upcoming:each" do |tag|
+		result = []
     tag.locals.events.each do |event|
       tag.locals.event = event
       tag.locals.page = event
@@ -40,7 +88,15 @@ module PageEventTags
     tag.expand
   end	
 	
-
+  desc %{
+    Displays a monthly calendar with any published events displayed on the date the event occurs
+    
+    *Usage:*
+    <pre><code><r:events:upcoming:each>
+     ...
+    </r:events:upcoming:each>
+    </code></pre>
+  }
 	tag	"events:calendar" do |tag|
 		params = tag.locals.page.request.parameters
 
@@ -54,7 +110,7 @@ module PageEventTags
 		
 		prev_month = selected_date - 1.month
 		next_month = selected_date + 1.month		
-		events_by_date = events_for(selected_date) # TODO - needs to limit events to the published status
+		events_by_date = events_for(selected_date)
 		
 		Date::MONTHNAMES[selected_date.mon]
 
@@ -111,50 +167,4 @@ module PageEventTags
 			end
     end		
 	end
-	
-	private
-	
-		def event_find_options(tag)
-	    attr = tag.attr.symbolize_keys
-    
-	    options = {}
-    
-	    [:limit, :offset].each do |symbol|
-	      if number = attr[symbol]
-	        if number =~ /^\d{1,4}$/
-	          options[symbol] = number.to_i
-	        else
-	          raise TagError.new("`#{symbol}' attribute of `each' tag must be a positive number between 1 and 4 digits")
-	        end
-	      end
-	    end
-    
-	    by = (attr[:by] || 'published_at').strip
-	    order = (attr[:order] || 'asc').strip
-	    order_string = ''
-	    if self.attributes.keys.include?(by)
-	      order_string << by
-	    else
-	      raise TagError.new("`by' attribute of `each' tag must be set to a valid field name")
-	    end
-	    if order =~ /^(asc|desc)$/i
-	      order_string << " #{$1.upcase}"
-	    else
-	      raise TagError.new(%{`order' attribute of `each' tag must be set to either "asc" or "desc"})
-	    end
-	    options[:order] = order_string
-    
-	    status = (attr[:status] || 'published').downcase
-	    unless status == 'all'
-	      stat = Status[status]
-	      unless stat.nil?
-	        options[:conditions] = ["(virtual = ?) and (status_id = ?)", false, stat.id]
-	      else
-	        raise TagError.new(%{`status' attribute of `each' tag must be set to a valid status})
-	      end
-	    else
-	      options[:conditions] = ["virtual = ?", false]
-	    end
-	    options
-	  end
 end
