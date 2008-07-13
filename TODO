@@ -1,7 +1,7 @@
 --Next Release--
-events_by_month get a published only option for calendar
-tag descriptions
-spec conversion
+scope by next and upcoming tags by regex/url - such as limit the events to 'meetings'
+complete spec conversion
+
 
 --Future Releases--
 Optional scope for published/hidden on events_by_month
