@@ -15,23 +15,27 @@ module PageEventTags
 
 # TODO do we need a to_date for any reason?
 	desc %{
-	  Will output the current event's date in the default format of MM/DD/YYYY, such as 07/15/2008
-  
+	  Will output the current event's date. The format attribute accepts the same patterns
+	  as Ruby's @strftime@ function (default is @%m/%d/%Y@)
+	  
 	  *Usage:*
-	  <pre><code><r:event:date /></code></pre>
+	  <pre><code><r:event:date [format="%m/%d/%Y"]/></code></pre>
 	}
 	tag "event:date" do |tag|
-		tag.locals.page.event_datetime.strftime("%m/%d/%Y") if tag.locals.page.event_datetime
+	  format = (tag.attr['format'] || '%m/%d/%Y')
+		tag.locals.page.event_datetime.strftime(format) if tag.locals.page.event_datetime
 	end
 	
 	desc %{
-	  Will output the current event's time in the default format of HH:MM PM, such as 08:30 PM
-  
+	  Will output the current event's time. The format attribute accepts the same patterns
+	  as Ruby's @strftime@ function (default is @%I:%M %p@). 
+	  
 	  *Usage:*
-	  <pre><code><r:event:time /></code></pre>
+	  <pre><code><r:event:time [format="%I:%M %p"]/></code></pre>
 	}  
 	tag "event:time" do |tag|
-		tag.locals.page.event_datetime.strftime("%I:%M %p") if tag.locals.page.event_datetime
+	  format = (tag.attr['format'] || '%I:%M %p')
+		tag.locals.page.event_datetime.strftime(format) if tag.locals.page.event_datetime
 	end
 	
 	tag "events" do |tag|
