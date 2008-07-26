@@ -13,7 +13,6 @@ module PageEventTags
 		tag.expand if tag.locals.page.event_datetime
 	end
 
-# TODO do we need a to_date for any reason?
 	desc %{
 	  Will output the current event's date. The format attribute accepts the same patterns
 	  as Ruby's @strftime@ function (default is @%m/%d/%Y@)

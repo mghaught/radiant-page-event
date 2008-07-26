@@ -65,7 +65,7 @@ OR
 <r:event:date />
 <r:event:time />
 
-They will simply output the date or time, respectively, in a human formatted version.  There currently are no options for any of the tags.  As this extension matures and gets used beyond a single site options will begin to appear.
+They will simply output the date or time, respectively, in a human formatted version.  The <r:date/> and <r:time/> attributes accept a format parameter that specifies a strftime pattern for formatting the date or time.
 
 
 FUTURE RELEASES
