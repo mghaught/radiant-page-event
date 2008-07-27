@@ -1,4 +1,5 @@
 --Next Release--
+add options to upcoming tag, limit at the least
 scope by next and upcoming tags by regex/url - such as limit the events to 'meetings'
 complete spec conversion
 
