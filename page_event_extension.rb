@@ -9,6 +9,8 @@ class PageEventExtension < Radiant::Extension
   end
 
   def activate
+    EventArchivePage
+    EventMonthIndexPage
 		Page.send :include, PageEvent::PageExtensions
 		Page.send :include, PageEventTags
 		admin.page.edit.add :layout_row, "edit_page_event"
