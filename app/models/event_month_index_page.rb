@@ -3,8 +3,12 @@ class EventMonthIndexPage < Page
   include ArchiveIndexTagsAndMethods
 
   def breadcrumb
-    year, month = $1, $2 if request_uri =~ %r{/(\d{4})/(\d{2})/?$}
-    Date.new(year.to_i, month.to_i, 1).strftime("%B, %Y")
+    if request_uri =~ %r{/(\d{4})/(\d{2})/?$}
+      year, month = $1, $2 
+      Date.new(year.to_i, month.to_i, 1).strftime("%B, %Y")
+    else
+      super
+    end
   end
 
   class << ArchiveFinder

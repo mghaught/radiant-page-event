@@ -18,6 +18,8 @@ class EventArchivePage < ArchivePage
           'EventArchiveYearIndexPage'
         end
       )
+    elsif url =~ %r{^#{ self.url }(fall|spring)/?$}
+      children.find_by_class_name('EventSeasonIndexPage')
     else
       super
     end
