@@ -1,6 +1,7 @@
 <%= calendar_date_select_includes('red') %>
 <p><label for="page_date_event_id">Event Date</label>
 	<%= calendar_date_select :page, :event_datetime, :time => :mixed %>
+	<label>All day event?</label><%= check_box :page, :event_all_day %>
 </p>
 
 	<!-- TODO - add the plus icon back in to make the input field appear and have a - to remove and nil out the date -->

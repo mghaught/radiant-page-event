@@ -34,7 +34,11 @@ module PageEventTags
 	}  
 	tag "event:time" do |tag|
 	  format = (tag.attr['format'] || '%I:%M %p')
-		tag.locals.page.event_datetime.strftime(format) if tag.locals.page.event_datetime
+	  if tag.locals.page.event_all_day?
+	    "All day"
+    elsif tag.locals.page.event_datetime
+		  tag.locals.page.event_datetime.strftime(format)
+	  end
 	end
 	
 	tag "events" do |tag|
