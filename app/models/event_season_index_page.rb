@@ -16,6 +16,10 @@ class EventSeasonIndexPage < Page
     end
   end
 
+  def title
+    breadcrumb
+  end
+
   class << ArchiveFinder
     def event_season_finder(finder, season)
       new do |method, options|
@@ -37,5 +41,9 @@ class EventSeasonIndexPage < Page
     if ArchiveFinder.event_season_finder(parent.children, season).find(:all).empty?
       tag.expand
     end
+  end
+
+  tag "archive:season" do |tag|
+    breadcrumb
   end
 end

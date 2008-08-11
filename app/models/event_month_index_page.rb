@@ -11,6 +11,10 @@ class EventMonthIndexPage < Page
     end
   end
 
+  def title
+    breadcrumb
+  end
+
   class << ArchiveFinder
     def event_month_finder(finder, year, month)
       new do |method, options|
