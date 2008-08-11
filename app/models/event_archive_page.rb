@@ -1,7 +1,7 @@
 class EventArchivePage < ArchivePage
   def child_url(child)
     date = child.event_datetime || Time.now
-    if child.virtual? || child.instance_of?(TagSearchPage)
+    if child.virtual?
       clean_url "#{ url }/#{ child.slug }"
     else
       clean_url "#{ url }/#{ date.strftime '%Y/%m/%d' }/#{ child.slug }"
