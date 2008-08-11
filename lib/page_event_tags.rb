@@ -66,9 +66,8 @@ module PageEventTags
     <pre><code><r:events:upcoming>...</r:events:upcoming></code></pre>
   }
 	tag "events:upcoming" do |tag|
-    tag.locals.events = Page.upcoming_events
     tag.expand
-	end	
+	end
 
   desc %{
     Cycles through each of the upcoming events. Inside this tag all page attribute tags
@@ -79,14 +78,16 @@ module PageEventTags
      ...
     </r:events:upcoming:each>
     </code></pre>
-  }	
+  }
 	tag "events:upcoming:each" do |tag|
+	  limit = tag.attr['limit'] || 3
+    events = Page.upcoming_events(limit)
 		result = []
-    tag.locals.events.each do |event|
+    events.each do |event|
       tag.locals.event = event
       tag.locals.page = event
       result << tag.expand
-    end 
+    end
     result
 	end
 	
