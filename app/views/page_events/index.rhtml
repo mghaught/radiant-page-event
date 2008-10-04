@@ -46,7 +46,12 @@ span.event_date {
 		<tr>
 			<td><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><%= event.title %></a></td> 
 			<td><%= event.status.name %></td> 
-			<td><%= event.event_datetime.strftime("%m/%d/%Y %I:%M %p") %></td>
+			<td>
+			  <%= event.event_datetime_start.strftime("%m/%d/%Y %I:%M %p") %>
+			  <%- if event.event_datetime_end > event.event_datetime_start -%>
+			  &ndash;<%= event.event_datetime_end.strftime("%m/%d/%Y %I:%M %p") %>
+			  <%- end -%>
+			</td>
 		</tr>
 	<% end
 	else -%>

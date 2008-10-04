@@ -18,7 +18,10 @@
 		%>
       <%= hidden_field_tag 'page_event[page_id]', @page.id, :id => 'page-id-field' %>
       Name: <%= text_field_tag "page[page_event][name]", event_name, :id => 'event-name-field', :maxlength => 100 %><br> 
-			Date: <%= calendar_date_select_tag "page_event[datetime]", event_date, :time => :mixed %><br>
+			Date: <%= calendar_date_select_tag "page_event[datetime]", event_date_start, :time => :mixed %>
+			      <%- if event_date_end > event_date_start -%>
+			      &ndash;<%= calendar_date_select_tag "page_event[datetime]", event_date_end, :time => :mixed %>
+			      <%- end -%><br>
       Location: <%= text_field_tag "page_event[location]", event_location, :id => 'event-location-field', :maxlength => 100 %><br> 
       <%= submit_tag "Add Event", :id => 'add-event-button' %>
     </div>

@@ -1,4 +1,2 @@
 module PageEventsHelper
-	
-	
 end
