@@ -1,17 +1,19 @@
 --Next Release--
+Fix bug on page_event tab when no end date is set
+Make event fields be hidden (in popup) unless set or they click the add date icon
+Add the default time to event in calendar picker, default to top of the hour
+Have the end_date default to X time after start date (1 hour)
+Delete PageEvent model
+Add validations on start and end dates on Page
 add options to upcoming tag, limit at the least
 scope by next and upcoming tags by regex/url - such as limit the events to 'meetings'
 complete spec conversion
-
+move calendar plugin inside extension??
 
 --Future Releases--
 Optional scope for published/hidden on events_by_month
 Extract Calendar to class that admin and public side can use
 Make Page Event tab attractive :)
-Develop PageEvent model to handle a range of time for an event
-PageEvent can be assigned to multiple pages (can be orphaned, add ui to find orphans)
-
-As a gem?  gem, then gem unpack
 
 
 

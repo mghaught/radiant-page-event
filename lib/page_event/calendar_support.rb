@@ -4,7 +4,7 @@ module PageEvent::CalendarSupport
 		events = Page.events_by_month(selected_date, Status['published'].id)
 		events_by_date = {}
 		events.map do |e|
-			event_date = e.event_datetime.to_date
+			event_date = e.event_datetime_start.to_date
 			events_by_date[event_date] ||= []
 			events_by_date[event_date] << e
 		end		

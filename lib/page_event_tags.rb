@@ -63,6 +63,10 @@ module PageEventTags
 	  end
 	end
 	
+	tag "events" do |tag|
+    tag.expand
+  end
+	
   desc %{
     Returns the page with the next occurring event. Inside this tag all page attribute tags are mapped to
     the this page. 
@@ -117,10 +121,7 @@ module PageEventTags
     Displays a monthly calendar with any published events displayed on the date the event occurs
     
     *Usage:*
-    <pre><code><r:events:upcoming:each>
-     ...
-    </r:events:upcoming:each>
-    </code></pre>
+    <pre><code><r:events:calendar /></code></pre>
   }
 	tag	"events:calendar" do |tag|
 		params = tag.locals.page.request.parameters

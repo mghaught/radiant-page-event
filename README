@@ -7,34 +7,43 @@ Page Event is a simple page-based event calendar for associating time-based even
 
 INSTALLATION
 
-NOTE: The extension is tested against 6.6 and 6.7 though it might work for some of the older 6 releases.  If you use a version older than 6.7 you'll need the shards extension installed and configured properly.  I have no intention of adding support for any release prior to 6.6.  The following instructions assume you have Radiant 6.7 installed and configured properly.
+NOTE: The extension is tested against 6.6  through 6.9 though it might work for some of the older 6 releases.  If you use a version older than 6.7 you'll need the shards extension installed and configured properly.  I have no intention of adding support for any release prior to 6.6.  The following instructions assume you have Radiant 6.7 installed and configured properly.
 
 1) Install the Calendar Date Select plugin with the following command:
 
+git clone git://github.com/timcharper/calendar_date_select.git vendor/plugins/calendar_date_select
+
+OR
+
 svn export http://calendardateselect.googlecode.com/svn/tags/calendar_date_select vendor/plugins/calendar_date_select
 
-I may slurp this plugin up inside Page Event at some point but for now I'll just leave it in its normal plugin form.  You can read more about it here:
+You can read more about it here:
 http://code.google.com/p/calendardateselect/ 
 
 
 2) Install the Page Event Extension
 
+If you're only 6.9 or newer:
+
+script/extension install page_event
+
+OR the old way:
+
 git clone git://github.com/mghaught/radiant-page-event.git vendor/extensions/page_event
 
-If you don't want the git information you can always delete the .git directory under page_event for now.  I will release this as a zip/tarball in the future as well as consider other options, such as gem.
-
-** Github has a download button that will give you a tarball of the extension.  If you don't want to use git then go this route and expand the tarball in the vend0r/extensions/page_event directory of your Radiant app.
+** Github has a download button that will give you a tarball of the extension.  If you don't want to use git then go this route and expand the tarball in the vendor/extensions/page_event directory of your Radiant app.
 
 
-3) run migration
+3) run migration*
 
 rake production radiant:extensions:page_event:migrate
 
 
-4) run rake update for extension
+4) run rake update for extension*
 
 rake radiant:extensions:page_event:update
 
+*Both 3 and 4 are unnecessary if you used the script/extension install command
 
 5) Start (or restart) your server
 
@@ -45,7 +54,7 @@ The extension will create a new column on the pages table to store an optional e
 
 For displaying these events on your radiant pages you can choose from several tags.  The main tag you'll use is the monthly calendar tag:
 
-<r:calendar />
+<r:events:calendar />
 
 It will produce the current month's view with any events during the time.  The calendar also has previous and next month navigation.  A default set of css styles are provided in the following file:
 
@@ -53,19 +62,30 @@ It will produce the current month's view with any events during the time.  The c
 
 In order to make use of this stylesheet you'll need to add it to the pages that will use the calendar tag.  
 
+
+There are several tags that allow you to grab either the next event or a list of upcoming events.
+
+<r:events:next>...</r:events:next>
+<r:events:upcoming:each>...</r:events:upcoming:each>
+
+
 When it comes to accessing a specific page's event data you can use the following tags:
 
 <r:event>
   Date: <r:date />
   Time: <r:time />
+	Duration: <r:duration />
 </r:event>
 
 OR
 
 <r:event:date />
 <r:event:time />
+<r:event:duration />
 
 They will simply output the date or time, respectively, in a human formatted version.  The <r:date/> and <r:time/> tags accept a format attribute that specifies a strftime pattern for formatting the date or time.
+
+
 
 
 FUTURE RELEASES
