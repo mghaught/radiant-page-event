@@ -6,12 +6,15 @@ class PagesScenario < Scenario::Base
   	create_page "Home", :slug => "/", :parent_id => nil,
 			:published_at => 2.months.ago.to_s(:db),
 			:body => "Hello world!",
-			:event_datetime => 5.minutes.from_now.to_s(:db)
+			:event_datetime_start => 5.minutes.from_now.to_s(:db),
+			:event_datetime_end => 125.minutes.from_now.to_s(:db)
+			
 
 		create_page "No Event"
-		create_page "CMonth First", :event_datetime => Time.now.at_beginning_of_month.to_s(:db)
-		create_page "CMonth Last", :event_datetime => (Time.now.at_beginning_of_month.next_month - 2.minutes).to_s(:db)
-		create_page "Last Month", :event_datetime => (Time.now.at_beginning_of_month.last_month).to_s(:db)
+		create_page "CMonth First", :event_datetime_start => Time.now.at_beginning_of_month.to_s(:db), 
+			:event_datetime_end => (Time.now.at_beginning_of_month + 2.hours).to_s(:db)
+		create_page "CMonth Last", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 2.minutes).to_s(:db)
+		create_page "Last Month", :event_datetime_start => (Time.now.at_beginning_of_month.last_month).to_s(:db)
 		
 
   end

@@ -1,5 +1,4 @@
 --Next Release--
-Fix bug on page_event tab when no end date is set
 Make event fields be hidden (in popup) unless set or they click the add date icon
 Add the default time to event in calendar picker, default to top of the hour
 Have the end_date default to X time after start date (1 hour)

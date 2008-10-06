@@ -26,7 +26,7 @@ describe Page do
 	describe "#upcoming_events" do
 		
 		before(:each) do
-		  create_page "Another event", :event_datetime => (Time.now.at_beginning_of_month.next_month - 4.minutes).to_s(:db)
+		  create_page "Another event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 4.minutes).to_s(:db)
 		end
 		
 	  it "should return the pages for the next 3 upcoming events" do
@@ -40,8 +40,8 @@ describe Page do
 		describe "with more upcoming events" do
 			
 			before(:each) do
-			  create_page "Yet another event", :event_datetime => (Time.now.at_beginning_of_month.next_month - 3.minutes).to_s(:db)
-				create_page "Final event", :event_datetime => (Time.now.at_beginning_of_month.next_month - 1.minutes).to_s(:db)
+			  create_page "Yet another event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 3.minutes).to_s(:db)
+				create_page "Final event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 1.minutes).to_s(:db)
 			end
 			
 		  it "should return only return 3 events, even if there are more" do

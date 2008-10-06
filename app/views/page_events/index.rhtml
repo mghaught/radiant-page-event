@@ -48,7 +48,7 @@ span.event_date {
 			<td><%= event.status.name %></td> 
 			<td>
 			  <%= event.event_datetime_start.strftime("%m/%d/%Y %I:%M %p") %>
-			  <%- if event.event_datetime_end > event.event_datetime_start -%>
+			  <%- if event.event_datetime_end && event.event_datetime_end > event.event_datetime_start -%>
 			  &ndash;<%= event.event_datetime_end.strftime("%m/%d/%Y %I:%M %p") %>
 			  <%- end -%>
 			</td>
