@@ -34,7 +34,11 @@ module PageEventTags
 	}  
 	tag "event:time" do |tag|
 	  format = (tag.attr['format'] || '%I:%M %p')
-		tag.locals.page.event_datetime.strftime(format) if tag.locals.page.event_datetime
+	  if tag.locals.page.event_all_day?
+	    "All day"
+    elsif tag.locals.page.event_datetime
+		  tag.locals.page.event_datetime.strftime(format)
+	  end
 	end
 	
 	tag "events" do |tag|
@@ -62,9 +66,8 @@ module PageEventTags
     <pre><code><r:events:upcoming>...</r:events:upcoming></code></pre>
   }
 	tag "events:upcoming" do |tag|
-    tag.locals.events = Page.upcoming_events
     tag.expand
-	end	
+	end
 
   desc %{
     Cycles through each of the upcoming events. Inside this tag all page attribute tags
@@ -75,14 +78,16 @@ module PageEventTags
      ...
     </r:events:upcoming:each>
     </code></pre>
-  }	
+  }
 	tag "events:upcoming:each" do |tag|
+	  limit = tag.attr['limit'] || 3
+    events = Page.upcoming_events(limit)
 		result = []
-    tag.locals.events.each do |event|
+    events.each do |event|
       tag.locals.event = event
       tag.locals.page = event
       result << tag.expand
-    end 
+    end
     result
 	end
 	
