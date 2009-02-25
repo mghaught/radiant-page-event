@@ -13,6 +13,28 @@ module PageEventTags
 		tag.expand if tag.locals.page.event_datetime_start
 	end
 
+  desc %{
+    Expand inner tags if event is an upcoming event.
+
+    *Usage:*
+    <pre><code><r:event:if_upcoming>...</r:event:if_upcoming></code></pre>
+  }
+  tag "event:if_upcoming" do |tag|
+    event = tag.locals.page.event_datetime
+    tag.expand if event and event > Time.now
+  end
+
+  desc %{
+    Expand inner tags if event is a previous event.
+
+    *Usage:*
+    <pre><code><r:event:if_previous>...</r:event:if_previous></code></pre>
+  }
+  tag "event:if_previous" do |tag|
+    event = tag.locals.page.event_datetime
+    tag.expand if event and event < Time.now
+  end
+
 	desc %{
 	  Will output the current event's date. The format attribute accepts the same patterns
 	  as Ruby's @strftime@ function (default is @%m/%d/%Y@)
@@ -88,9 +110,8 @@ module PageEventTags
     <pre><code><r:events:upcoming>...</r:events:upcoming></code></pre>
   }
 	tag "events:upcoming" do |tag|
-    tag.locals.events = Page.upcoming_events
     tag.expand
-	end	
+	end
 
   desc %{
     Cycles through each of the upcoming events. Inside this tag all page attribute tags
@@ -101,14 +122,16 @@ module PageEventTags
      ...
     </r:events:upcoming:each>
     </code></pre>
-  }	
+  }
 	tag "events:upcoming:each" do |tag|
+	  limit = tag.attr['limit'] || 3
+    events = Page.upcoming_events(limit)
 		result = []
-    tag.locals.events.each do |event|
+    events.each do |event|
       tag.locals.event = event
       tag.locals.page = event
       result << tag.expand
-    end 
+    end
     result
 	end
 	
