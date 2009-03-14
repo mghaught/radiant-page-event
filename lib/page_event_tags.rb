@@ -20,7 +20,7 @@ module PageEventTags
     <pre><code><r:event:if_upcoming>...</r:event:if_upcoming></code></pre>
   }
   tag "event:if_upcoming" do |tag|
-    event = tag.locals.page.event_datetime
+    event = tag.locals.page.event_datetime_start
     tag.expand if event and event > Time.now
   end
 
@@ -31,7 +31,7 @@ module PageEventTags
     <pre><code><r:event:if_previous>...</r:event:if_previous></code></pre>
   }
   tag "event:if_previous" do |tag|
-    event = tag.locals.page.event_datetime
+    event = tag.locals.page.event_datetime_start
     tag.expand if event and event < Time.now
   end
 
