@@ -19,7 +19,7 @@ class EventArchivePage < ArchivePage
         when month
           'EventMonthIndexPage'
         else
-          'EventYearIndexPage'
+          'EventArchiveYearIndexPage'
         end
       )
     elsif url =~ %r{^#{ self.url }(fall|spring)/?$}
