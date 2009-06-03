@@ -20,7 +20,7 @@ class EventYearIndexPage < Page
       new do |method, options|
         start = Time.local(year)
         finish = start.next_year
-        add_condition(options, "event_datetime >= ? and event_datetime < ?", start, finish)
+        add_condition(options, "event_datetime_start >= ? and event_datetime_start < ?", start, finish)
         finder.find(method, options)
       end
     end

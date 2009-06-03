@@ -15,11 +15,11 @@ class EventArchivePage < ArchivePage
       children.find_by_class_name(
         case
         when day
-          'EventArchiveDayIndexPage'
+          'EventDayIndexPage'
         when month
           'EventMonthIndexPage'
         else
-          'EventArchiveYearIndexPage'
+          'EventYearIndexPage'
         end
       )
     elsif url =~ %r{^#{ self.url }(fall|spring)/?$}
