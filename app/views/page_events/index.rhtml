@@ -11,7 +11,7 @@
   <h2><%= @date.strftime("%B") %></h2>
 </div>
 
-<table id="site-map" class="index" summary="Page hierarchy of the current site">
+<table id="event-map" class="index" summary="Page hierarchy of the current site">
   <thead>
     <tr>
       <th class="page">Page</th>
@@ -57,5 +57,6 @@
 
 
 <% if @events_index_page %>
-  <%= link_to "Create new event", new_admin_page_child_path(@events_index_page.id), :title => "Create an event at #{@events_index_page.url}" %>
+  <%= link_to "Create new event", new_admin_page_child_path(@events_index_page.id), 
+        :title => "Create an event at #{@events_index_page.url}" %>
 <% end %>
