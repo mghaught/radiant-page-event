@@ -1,3 +1,9 @@
+#content table.index .level-1 .date {
+  font-size:115%;
+  font-weight:bold;
+  padding-top: 1.2em;
+}
+
 #calendar_head{
   float: left;
   width: 100%;
@@ -6,6 +12,10 @@
   text-align: center;
   padding: 0 20%;
   margin-top: 8px;
+}
+#calendar_head a{
+  text-decoration: none;
+  color: #000;
 }
 #calendar_head a.prev{
   float: left;

@@ -1,13 +1,12 @@
 <% include_stylesheet 'page_event/admin' %>
-<link href="/stylesheets/calendar/red/style.css" media="screen" rel="Stylesheet" type="text/css" />
 
 <h1>Events for <%= month_with_year(@date) %></h1>
 
 <div id="calendar_head">
-  <%= link_to_month( @last_month, @last_month_count, "prev adjacent" ) %>
-  <%= link_to_month( @next_month, @next_month_count, "next adjacent" ) %>
-  <%= link_to_month( @last_eventful_month, @last_eventful_month_count, "prev eventful" ) %>
-  <%= link_to_month( @next_eventful_month, @next_eventful_month_count, "next eventful" ) %>
+  <%= link_to_month( @last_month, @last_month_count, "prev adjacent", "Previous month" ) %>
+  <%= link_to_month( @next_month, @next_month_count, "next adjacent", "Next month" ) %>
+  <%= link_to_month( @last_eventful_month, @last_eventful_month_count, "prev eventful", "Previous month in which events occur" ) %>
+  <%= link_to_month( @next_eventful_month, @next_eventful_month_count, "next eventful", "Next month in which events occur" ) %>
 
   <h2><%= @date.strftime("%B") %></h2>
 </div>
@@ -29,7 +28,7 @@
     <% if trackdate.strftime("%d %b") != event.event_datetime_start.strftime("%d %b") %>
       <% trackdate = event.event_datetime_start %>
       <tr class="node level-1">
-        <td class="page" colspan="5">
+        <td class="date page" colspan="5">
           <%= event.event_datetime_start.strftime("%d %B") %>
         </td>
       </tr>
