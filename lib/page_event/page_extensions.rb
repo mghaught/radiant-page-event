@@ -2,7 +2,16 @@ module PageEvent::PageExtensions
 	
 	def self.included(base)
     base.extend ClassMethods
-  end	
+  end
+  
+  def is_event?
+    parent && 
+    parent.class_name == "EventArchivePage" && 
+    class_name != "EventDayIndexPage" &&
+    class_name != "EventMonthIndexPage" &&
+    class_name != "EventYearIndexPage" &&
+    class_name != "EventSeasonIndexPage"
+  end
 
   module ClassMethods
 		def events_by_month(date = Time.now, status = nil)
