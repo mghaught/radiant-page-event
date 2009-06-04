@@ -40,6 +40,33 @@ module PageEvent::PageExtensions
 					:status => Status['published'].id
 				}], 
 				:order => "event_datetime_start, event_datetime_end", :limit => limit)		
-		end	
+		end
+		
+    def next_eventful_month(date=Time.now)
+      last_day_of_month = Date.new(date.year, date.month, -1)
+
+      if event = Page.find(:first, 
+            :conditions => ["event_datetime_start > ? AND status_id = ?", last_day_of_month, Status['published'].id], 
+            :order => "event_datetime_start ASC")
+
+        if next_event = event.event_datetime_start
+          Date.new(next_event.year, next_event.month)
+        end
+      end
+    end
+    
+    def last_eventful_month(date=Time.now)
+      first_day_of_month = Date.new(date.year, date.month)
+
+      if event = Page.find(:first, 
+            :conditions => ["event_datetime_start < ? AND status_id = ?", first_day_of_month, Status['published'].id], 
+            :order => "event_datetime_start DESC")
+
+        if prev_event = event.event_datetime_start
+          Date.new(prev_event.year, prev_event.month)
+        end
+      end
+    end
+    
   end
 end

@@ -4,9 +4,21 @@
 
 <h1>Events for <%= month_with_year(@date) %></h1>
 
-<%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})", :year => @last_month.year, :month => @last_month.month )%> | 
-<%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})", :year => @next_month.year, :month => @next_month.month )%>
+<% if @last_eventful_month %>
+  <%= link_to("#{@last_eventful_month.strftime("%B")}(#{@last_eventful_month_count})", 
+      :year => @last_eventful_month.year, :month => @last_eventful_month.month )%>
+<% end %>
 
+<%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})", 
+  :year => @last_month.year, :month => @last_month.month )%>
+
+<%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})", 
+  :year => @next_month.year, :month => @next_month.month )%>
+
+<% if @next_eventful_month %>
+<%= link_to("#{@next_eventful_month.strftime("%B")}(#{@next_eventful_month_count})", 
+  :year => @next_eventful_month.year, :month => @next_eventful_month.month )%>
+<% end %>
 
 <table id="site-map" class="index" summary="Page hierarchy of the current site">
   <thead>
