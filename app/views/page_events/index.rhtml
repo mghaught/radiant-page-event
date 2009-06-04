@@ -28,7 +28,7 @@ span.event_date {
   </style>
 
 
-<h1>Page Events for <%= @date.strftime("%B") %></h1>
+<h1>Events for <%= month_with_year(@date) %></h1>
 
 <%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})",:date => @last_month.to_s(:db))%> | 
 <%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})",:date => @next_month.to_s(:db))%>
