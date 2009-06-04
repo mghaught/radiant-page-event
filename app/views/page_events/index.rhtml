@@ -17,29 +17,40 @@
     </tr>
   </thead>
   <tbody>
-	<% unless @current_events.empty?
-		@current_events.each do |event| -%>
-		<tr class="node level-2">
-			<td class="page"><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><span class="title"><%= event.title %></span></a></td> 
-			<td><%= event.status.name %></td>
-			<td>
-			 <%= event.event_datetime_start.strftime("%d %b") %>
-			</td>
-			<td>
-			  <%= event.event_datetime_start.strftime("%I:%M %p") %>
-			</td>
-			<td>
-			  <%- if event.event_datetime_end && event.event_datetime_end > event.event_datetime_start -%>
-			    <%= finishing_time(event.event_datetime_end, event.event_datetime_start) %>
-			  <%- end -%>
-			</td>
-		</tr>
-	<% end
-	else -%>
+  <%- unless @current_events.empty? -%>
+    <%- trackdate = Time.now -%>
+    <%- @current_events.each do |event| -%>
+
+    <% if trackdate.strftime("%d %b") != event.event_datetime_start.strftime("%d %b") %>
+      <% trackdate = event.event_datetime_start %>
+      <tr class="node level-1">
+        <td class="page" colspan="5">
+          <%= event.event_datetime_start.strftime("%d %b") %>
+        </td>
+      </tr>
+    <% end %>
+
+    <tr class="node level-2">
+      <td class="page"><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><span class="title"><%= event.title %></span></a></td> 
+      <td><%= event.status.name %></td>
+      <td>
+       <%= event.event_datetime_start.strftime("%d %b") %>
+      </td>
+      <td>
+        <%= event.event_datetime_start.strftime("%I:%M %p") %>
+      </td>
+      <td>
+        <%- if event.event_datetime_end && event.event_datetime_end > event.event_datetime_start -%>
+          <%= finishing_time(event.event_datetime_end, event.event_datetime_start) %>
+        <%- end -%>
+      </td>
+    </tr>
+  <% end
+  else -%>
   <tr>
     <td colspan="4" class="note">No Pages</td>
   </tr>
-	<% end -%>
+  <% end -%>
   </tbody>
 </table>
 
