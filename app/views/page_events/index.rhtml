@@ -4,9 +4,9 @@
 
 <div id="calendar_head">
   <%= link_to_month( @last_month, @last_month_count, "prev adjacent", "Previous month" ) %>
-  <%= link_to_month( @next_month, @next_month_count, "next adjacent", "Next month" ) %>
+  <%= link_to_month( @next_month, @next_month_count, "next adjacent", "Following month" ) %>
   <%= link_to_month( @last_eventful_month, @last_eventful_month_count, "prev eventful", "Previous month in which events occur" ) %>
-  <%= link_to_month( @next_eventful_month, @next_eventful_month_count, "next eventful", "Next month in which events occur" ) %>
+  <%= link_to_month( @next_eventful_month, @next_eventful_month_count, "next eventful", "Following month in which events occur" ) %>
 
   <h2><%= @date.strftime("%B") %></h2>
 </div>
@@ -56,6 +56,6 @@
 </table>
 
 
-
-
-
+<% if @events_index_page %>
+  <%= link_to "Create new event", new_admin_page_child_path(@events_index_page.id), :title => "Create an event at #{@events_index_page.url}" %>
+<% end %>

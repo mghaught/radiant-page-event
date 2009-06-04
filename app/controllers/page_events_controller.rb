@@ -1,6 +1,8 @@
 class PageEventsController < ApplicationController
-
+  
   def index
+    
+    @events_index_page = Page.find_by_class_name("EventArchivePage")
     
     if !params[:year].blank? and !params[:month].blank?
       @date = Time.local(params[:year], params[:month])
@@ -24,8 +26,6 @@ class PageEventsController < ApplicationController
         @next_eventful_month_count = Page.event_count_by_month(@next_eventful_month)
       end
     end
-    
-    # debugger
     
     @current_events = Page.events_by_month(@date)
   end
