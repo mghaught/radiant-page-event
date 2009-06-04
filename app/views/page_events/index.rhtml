@@ -6,12 +6,13 @@
 
 <%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})", :year => @last_month.year, :month => @last_month.month )%> | 
 <%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})", :year => @next_month.year, :month => @next_month.month )%>
+
+
 <table id="site-map" class="index" summary="Page hierarchy of the current site">
   <thead>
     <tr>
       <th class="page">Page</th>
       <th class="status">Status</th>
-      <th>Date</th>
       <th>Start</th>
       <th>Finish</th>
     </tr>
@@ -25,7 +26,7 @@
       <% trackdate = event.event_datetime_start %>
       <tr class="node level-1">
         <td class="page" colspan="5">
-          <%= event.event_datetime_start.strftime("%d %b") %>
+          <%= event.event_datetime_start.strftime("%d %B") %>
         </td>
       </tr>
     <% end %>
@@ -33,9 +34,6 @@
     <tr class="node level-2">
       <td class="page"><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><span class="title"><%= event.title %></span></a></td> 
       <td><%= event.status.name %></td>
-      <td>
-       <%= event.event_datetime_start.strftime("%d %b") %>
-      </td>
       <td>
         <%= event.event_datetime_start.strftime("%I:%M %p") %>
       </td>
