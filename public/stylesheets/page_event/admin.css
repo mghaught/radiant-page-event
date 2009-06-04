@@ -30,3 +30,11 @@
   text-align: right;
 }
 
+#content{
+  position: relative;
+}
+#new_event_top{
+  position: absolute;
+  top:20px;
+  right:20px;
+}

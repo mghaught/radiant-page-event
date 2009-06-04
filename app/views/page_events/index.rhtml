@@ -2,6 +2,12 @@
 
 <h1>Events for <%= month_with_year(@date) %></h1>
 
+<% if @events_index_page %>
+  <%= link_to image("events/new-event", :alt => "New event"), new_admin_page_child_path(@events_index_page.id), 
+        :title => "Create an event at #{@events_index_page.url}", :id => "new_event_top" %>
+<% end %>
+
+
 <div id="calendar_head">
   <%= link_to_month( @last_month, @last_month_count, "prev adjacent", "Previous month" ) %>
   <%= link_to_month( @next_month, @next_month_count, "next adjacent", "Following month" ) %>
@@ -57,6 +63,8 @@
 
 
 <% if @events_index_page %>
-  <%= link_to "Create new event", new_admin_page_child_path(@events_index_page.id), 
-        :title => "Create an event at #{@events_index_page.url}" %>
+  <p>
+    <%= link_to image("events/new-event", :alt => "New event"), new_admin_page_child_path(@events_index_page.id), 
+          :title => "Create an event at #{@events_index_page.url}" %>
+  </p>
 <% end %>
