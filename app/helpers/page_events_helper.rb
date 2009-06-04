@@ -20,4 +20,10 @@ module PageEventsHelper
     end
   end
   
+  def link_to_month(month, count=0, class_name=nil)
+    return if month.nil?
+    link_to("#{month.strftime("%B")} (#{count})", 
+        {:year => month.year, :month => month.month}, :class => class_name )
+  end
+  
 end

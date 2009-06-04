@@ -1,0 +1,22 @@
+#calendar_head{
+  float: left;
+  width: 100%;
+}
+#calendar_head h2{
+  text-align: center;
+  padding: 0 20%;
+  margin-top: 8px;
+}
+#calendar_head a.prev{
+  float: left;
+  width: 20%;
+  clear: left;
+}
+
+#calendar_head a.next{
+  float: right;
+  width: 20%;
+  clear: right;
+  text-align: right;
+}
+
