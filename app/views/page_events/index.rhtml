@@ -1,31 +1,5 @@
 <link href="/stylesheets/calendar/red/style.css" media="screen" rel="Stylesheet" type="text/css" />
-  <style type="text/css">
-div.calendar_day_display {
-	padding-left: 2px;
-	width: 100%;
-	margin-top: -1px;
-	background-color: #CCC;
-	text-align: left;
-}
 
-p.event {
-	font-size: 8pt;
-	padding: 0;
-	margin: 0;
-	text-align: left;
-}
-
-p.event a {
-	text-decoration: none;
-	padding: 0;
-	margin: 0;
-	text-align: left;
-}
-
-span.event_date {
-	font-size: 7pt;
-}
-  </style>
 
 
 <h1>Events for <%= month_with_year(@date) %></h1>
@@ -38,6 +12,8 @@ span.event_date {
       <th class="page">Page</th>
       <th class="status">Status</th>
       <th>Date</th>
+      <th>Start</th>
+      <th>Finish</th>
     </tr>
   </thead>
   <tbody>
@@ -45,11 +21,16 @@ span.event_date {
 		@current_events.each do |event| -%>
 		<tr class="node level-2">
 			<td class="page"><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><span class="title"><%= event.title %></span></a></td> 
-			<td><%= event.status.name %></td> 
+			<td><%= event.status.name %></td>
 			<td>
-			  <%= event.event_datetime_start.strftime("%m/%d/%Y %I:%M %p") %>
+			 <%= event.event_datetime_start.strftime("%d %b") %>
+			</td>
+			<td>
+			  <%= event.event_datetime_start.strftime("%I:%M %p") %>
+			</td>
+			<td>
 			  <%- if event.event_datetime_end && event.event_datetime_end > event.event_datetime_start -%>
-			  &ndash;<%= event.event_datetime_end.strftime("%m/%d/%Y %I:%M %p") %>
+			    <%= finishing_time(event.event_datetime_end, event.event_datetime_start) %>
 			  <%- end -%>
 			</td>
 		</tr>
