@@ -6,6 +6,10 @@ class PageEventExtension < Radiant::Extension
   
   define_routes do |map|
     map.connect 'admin/page_events/:action', :controller => 'page_events'
+    map.events  'admin/page_events/:year/:month', 
+      :controller => 'page_events', 
+      :action => "index", 
+      :requirements => { :year => /\d{4}/, :month => /\d{1,2}/ }
   end
 
   def activate

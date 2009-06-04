@@ -30,8 +30,8 @@ span.event_date {
 
 <h1>Events for <%= month_with_year(@date) %></h1>
 
-<%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})",:date => @last_month.to_s(:db))%> | 
-<%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})",:date => @next_month.to_s(:db))%>
+<%= link_to("#{@last_month.strftime("%B")}(#{@last_month_count})", :year => @last_month.year, :month => @last_month.month )%> | 
+<%= link_to("#{@next_month.strftime("%B")}(#{@next_month_count})", :year => @next_month.year, :month => @next_month.month )%>
 <table id="site-map" class="index" summary="Page hierarchy of the current site">
   <thead>
     <tr>
@@ -43,8 +43,8 @@ span.event_date {
   <tbody>
 	<% unless @current_events.empty?
 		@current_events.each do |event| -%>
-		<tr>
-			<td><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><%= event.title %></a></td> 
+		<tr class="node level-2">
+			<td class="page"><a href="<%= page_edit_url(:id => event) %>" title="<%= event.url %>"><span class="title"><%= event.title %></span></a></td> 
 			<td><%= event.status.name %></td> 
 			<td>
 			  <%= event.event_datetime_start.strftime("%m/%d/%Y %I:%M %p") %>
