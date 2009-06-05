@@ -5,11 +5,11 @@ class PageEventExtension < Radiant::Extension
   url "http://github.com/mghaught/radiant-page-event/tree/master"
   
   define_routes do |map|
+    map.with_options(:controller => 'page_events', :action => "index") do |e|
+      e.events  'admin/page_events/:year/:month', :requirements => { :year => /\d+/, :month => /\d+/ }
+      e.events  'admin/page_events/:year',        :requirements => { :year => /\d+/ }
+    end
     map.connect 'admin/page_events/:action', :controller => 'page_events'
-    map.events  'admin/page_events/:year/:month', 
-      :controller => 'page_events', 
-      :action => "index", 
-      :requirements => { :year => /\d{4}/, :month => /\d{1,2}/ }
   end
 
   def activate

@@ -4,8 +4,12 @@ class PageEventsController < ApplicationController
     
     @events_index_page = Page.find_by_class_name("EventArchivePage")
     
-    if !params[:year].blank? and !params[:month].blank?
-      @date = Time.local(params[:year], params[:month])
+    if !params[:year].blank?
+      begin
+        @date = Time.local(params[:year], params[:month])
+      rescue
+        redirect_to(:action => "index", :year => nil) and return false
+      end
     else
       @date = (params[:date] || Time.now).to_time
     end
