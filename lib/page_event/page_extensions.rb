@@ -30,7 +30,7 @@ module PageEvent::PageExtensions
 		def event_count_by_month(date = Time.now)
 			month_start = date.at_beginning_of_month
 			condition_str = "(event_datetime_start >= :month_start AND event_datetime_start < :month_end)"
-			condition_str << " OR (event_datetime_end >= :month_start AND event_datetime_end < :month_end)"	
+			condition_str << " OR (event_datetime_end >= :month_start AND event_datetime_end < :month_end)"
 			Page.count(:conditions => [condition_str,
                                 {
                                   :month_start => month_start,
@@ -54,10 +54,33 @@ module PageEvent::PageExtensions
     
     
     def events_in_range(start=nil, finish=nil)
-      []
+      begin
+        if start and finish
+          start_date = Time.local(*parse_date_string(start))
+          end_date   = Time.local(*parse_date_string(finish))
+          if end_date < start_date
+            start_date, end_date = end_date, start_date
+          end
+          end_date = end_date.tomorrow
+        elsif start
+          year, month, day = parse_date_string(start)
+          start_date = Time.local(year, month, day)
+          end_date = case 
+            when (!year.nil? and !month.nil? and !day.nil?) then start_date.tomorrow
+            when (!year.nil? and !month.nil?)               then start_date.next_month
+            when (!year.nil?)                               then start_date.next_year
+          end
+        else
+          raise ArgumentError, "You must provide at least one date, in 'yyyy(/mm(/dd))' format"
+        end
+      rescue
+        raise ArgumentError, "Dates should be provided in 'yyyy(/mm(/dd))' format."
+      end
+      condition_str = "(event_datetime_start >= :start_date AND event_datetime_start < :end_date)"
+      condition_str << " OR (event_datetime_end >= :start_date AND event_datetime_end < :end_date)"	
+      conditions = [condition_str, {:start_date => start_date, :end_date => end_date}]
+      Page.find(:all, :conditions => conditions)
     end
-    
-    
     
     
     
@@ -85,6 +108,12 @@ module PageEvent::PageExtensions
           Date.new(prev_event.year, prev_event.month)
         end
       end
+    end
+    
+    private
+
+    def parse_date_string(input)
+      input.split(/\/|-/).map{|n| n.to_i}
     end
     
   end

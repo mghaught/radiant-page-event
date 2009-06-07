@@ -70,35 +70,34 @@ describe Page do
   describe "#events_in_range" do
 
     it "should find all events in a given year" do
-      Page.events_in_range("2009").should include( pages(:march_first, :march_tenth, :april_first, :august_sixth, :next_christmas) )
+      Page.events_in_range("2009").
+        should == pages(:march_first, :march_tenth, :april_first, :august_sixth, :next_christmas)
     end
 
-    it "should find only events in a given year" do
-      Page.events_in_range("2009").should_not include( pages(:last_christmas) )
-    end
-  
     it "should find all events in a given month" do
-      Page.events_in_range("2009/03").should include( pages(:march_first, :march_tenth) )
-      Page.events_in_range("2009/04").should include( pages(:april_first) )
-      Page.events_in_range("2009/08").should include( pages(:august_sixth) )
-    end
-  
-    it "should find only events of a given month" do
-      Page.events_in_range("2009/03").should_not include( pages(:april_first, :august_sixth) )
-      Page.events_in_range("2009/04").should_not include( pages(:august_sixth) )
-      Page.events_in_range("2009/08").should_not include( pages(:april_first) )
+      Page.events_in_range("2009/03").should == pages(:march_first, :march_tenth)
+      Page.events_in_range("2009/04").should == [pages(:april_first)]
+      Page.events_in_range("2009/08").should == [pages(:august_sixth)]
     end
     
     it "should find events on a given day" do
       Page.events_in_range("2009/04/01").should == [pages(:april_first)]
     end
     
-    it "should find only events on a given day" do
-      Page.events_in_range("2009/04/01").should_not == [pages(:march_first)]
+    it "should find all events within a given range, inclusive" do
+      Page.events_in_range("2009/03/01","2009/03/10").should == pages(:march_first, :march_tenth)
     end
     
-    it "should find all events within a given range" do
-      Page.events_in_range("2009/03/01","2009/03/10").should == [pages(:march_first, :march_tenth)]
+    it "should find all events within a given range, even if start/end dates are in wrong order" do
+      Page.events_in_range("2009/03/10","2009/03/01").should == pages(:march_first, :march_tenth)
+    end
+    
+    it "should raise an exception when given an invalid date" do
+      lambda { Page.events_in_range("3009/04/01") }.should raise_error(ArgumentError)
+    end
+
+    it "should raise an exception when given no arguments" do
+      lambda { Page.events_in_range() }.should raise_error(ArgumentError)
     end
     
   end
