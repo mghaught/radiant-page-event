@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Page do
-	scenario :pages
+	dataset :event_pages
 	
 	describe "#events_by_month" do
 	  it "should return a list of pages with events in the current month" do

@@ -1,5 +1,4 @@
-
-class PagesScenario < Scenario::Base
+class EventPagesDataset < Dataset::Base
 
 
  	def load
