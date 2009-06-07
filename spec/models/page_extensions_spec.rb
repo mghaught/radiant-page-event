@@ -25,7 +25,7 @@ describe Page do
 
 	describe "#upcoming_events" do
 		
-		before(:each) do
+		before(:all) do
 		  create_page "Another event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 4.minutes).to_s(:db)
 		end
 		
@@ -37,22 +37,22 @@ describe Page do
 		  Page.upcoming_events.first.should == pages(:home)
 		end
 		
-		describe "with more upcoming events" do
-			
-			before(:each) do
-			  create_page "Yet another event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 3.minutes).to_s(:db)
-				create_page "Final event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 1.minutes).to_s(:db)
-			end
-			
-		  it "should return only return 3 events, even if there are more" do
-				Page.upcoming_events.should have(3).items
-		  end
-		
-			it "should allow more than 3 events with a different argument value" do
-			  Page.upcoming_events(5).should have(5).items
-			end
-		end
+	end
 
+	describe "#upcoming_events with more upcoming events" do
+		
+		before(:all) do
+		  create_page "Yet another event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 3.minutes).to_s(:db)
+			create_page "Final event", :event_datetime_start => (Time.now.at_beginning_of_month.next_month - 1.minutes).to_s(:db)
+		end
+		
+	  it "should return only return 3 events, even if there are more" do
+			Page.upcoming_events.should have(3).items
+	  end
+	
+		it "should allow more than 3 events with a different argument value" do
+		  Page.upcoming_events(5).should have(5).items
+		end
 	end
 
 	describe "#next_event" do
