@@ -50,7 +50,17 @@ module PageEvent::PageExtensions
 				}], 
 				:order => "event_datetime_start, event_datetime_end", :limit => limit)		
 		end
-		
+    
+    
+    
+    def events_in_range(start=nil, finish=nil)
+      []
+    end
+    
+    
+    
+    
+    
     def next_eventful_month(date=Time.now)
       last_day_of_month = Date.new(date.year, date.month, -1)
 
