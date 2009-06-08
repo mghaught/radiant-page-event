@@ -95,13 +95,13 @@ module PageEventTags
     
     *Usage:*
     <pre><code><r:events:next>...</r:events:next></code></pre>
-  }	
-	tag "events:next" do |tag|
-		if next_event = Page.next_event
+  } 
+  tag "events:next" do |tag|
+    if next_event = Page.next_event
       tag.locals.page = next_event
       tag.expand
     end
-	end	
+  end 
 
   desc %{
     Gives access to next three upcoming events' pages.
@@ -109,9 +109,9 @@ module PageEventTags
     *Usage:*
     <pre><code><r:events:upcoming>...</r:events:upcoming></code></pre>
   }
-	tag "events:upcoming" do |tag|
+  tag "events:upcoming" do |tag|
     tag.expand
-	end
+  end
 
   desc %{
     Cycles through each of the upcoming events. Inside this tag all page attribute tags
@@ -123,22 +123,56 @@ module PageEventTags
     </r:events:upcoming:each>
     </code></pre>
   }
-	tag "events:upcoming:each" do |tag|
-	  limit = tag.attr['limit'] || 3
+  tag "events:upcoming:each" do |tag|
+    limit = tag.attr['limit'] || 3
     events = Page.upcoming_events(limit)
-		result = []
+    result = []
     events.each do |event|
       tag.locals.event = event
       tag.locals.page = event
       result << tag.expand
     end
     result
-	end
-	
-  tag 'events:upcoming:each:event' do |tag|
-    tag.locals.page = tag.locals.event
+  end
+
+  # ===================================
+
+  tag "events:in_range" do |tag|
     tag.expand
-  end	
+  end
+
+  desc %{
+    Cycles through events during the specified range. Inside this tag all 
+    page attribute tags are mapped to the current event's page.
+    
+    A @start@ date may be specified as just a year (e.g. @start="2009"), 
+    which will return all events occurring during the given year. Or you
+    may specify a month (e.g. @start="2009/08"), or day (e.g. @start=2009/06/14) 
+    which will return all events occurring during that month or day, respectively.
+    
+    You may also specify a date range, by providing @start@ and @finish@ attributes.
+    If you supply both of these, you should spell out the full date for both of them.
+    The dates supplied are *inclusive*, so if you supply @start="2009/03/01" 
+    @finish="2009/03/02", it will include events occurring on March 1st and March 2nd.
+    
+    *Usage:*
+    <pre><code><r:events:in_range:each start="yyyy/mm/dd" [finish="yyy/mm/dd"]>
+     ...
+    </r:events:in_range:each>
+    </code></pre>
+  }
+  tag "events:in_range:each" do |tag|
+    start = tag.attr['start']
+    finish = tag.attr['finish']
+    events = Page.events_in_range(start, finish)
+    result = []
+    events.each do |event|
+      tag.locals.event = event
+      tag.locals.page = event
+      result << tag.expand
+    end
+    result
+  end
 	
   desc %{
     Displays a monthly calendar with any published events displayed on the date the event occurs
