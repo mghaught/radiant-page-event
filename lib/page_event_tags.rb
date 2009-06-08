@@ -126,6 +126,7 @@ module PageEventTags
   tag "events:upcoming:each" do |tag|
     limit = tag.attr['limit'] || 3
     events = Page.upcoming_events(limit)
+    tag.locals.previous_headers = {}
     result = []
     events.each do |event|
       tag.locals.event = event
@@ -165,6 +166,7 @@ module PageEventTags
     start = tag.attr['start']
     finish = tag.attr['finish']
     events = Page.events_in_range(start, finish)
+    tag.locals.previous_headers = {}
     result = []
     events.each do |event|
       tag.locals.event = event
@@ -173,6 +175,23 @@ module PageEventTags
     end
     result
   end
+  
+  tag 'events:each:header' do |tag|
+    previous_headers = tag.locals.previous_headers
+    name = tag.attr['name'] || :unnamed
+    restart = (tag.attr['restart'] || '').split(';')
+    header = tag.expand
+    unless header == previous_headers[name]
+      previous_headers[name] = header
+      unless restart.empty?
+        restart.each do |n|
+          previous_headers[n] = nil
+        end
+      end
+      header
+    end
+  end
+  
 	
   desc %{
     Displays a monthly calendar with any published events displayed on the date the event occurs
