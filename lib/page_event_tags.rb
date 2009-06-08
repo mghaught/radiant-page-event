@@ -176,6 +176,9 @@ module PageEventTags
     result
   end
   
+  desc %{
+    Behaves much like the @<r:children:each/>@ tag, but works for events.
+  }
   tag 'events:each:header' do |tag|
     previous_headers = tag.locals.previous_headers
     name = tag.attr['name'] || :unnamed
