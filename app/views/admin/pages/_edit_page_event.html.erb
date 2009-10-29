@@ -1,0 +1,10 @@
+<%= calendar_date_select_includes('red') %>
+<p><label for="page_date_event_id">Event Start Date</label>
+	<%= calendar_date_select :page, :event_datetime_start, :time => :mixed %>
+</p>
+<p><label for="page_date_event_id">Event End Date</label>
+	<%= calendar_date_select :page, :event_datetime_end, :time => :mixed %>
+</p>
+
+<!-- TODO - add the plus icon back in to make the input field appear and have a - to remove and nil out the date -->
+<!-- <= link_to image('plus'), 'javascript:toggle_add_page_event_popup()', :title => 'Add Event Date' %> -->

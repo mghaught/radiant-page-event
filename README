@@ -7,43 +7,35 @@ Page Event is a simple page-based event calendar for associating time-based even
 
 INSTALLATION
 
-NOTE: The extension is tested against 6.6  through 6.9 though it might work for some of the older 6 releases.  If you use a version older than 6.7 you'll need the shards extension installed and configured properly.  I have no intention of adding support for any release prior to 6.6.  The following instructions assume you have Radiant 6.7 installed and configured properly.
+NOTE:  This assumes you're on 0.8.1.  It most likely will not be backwards compatible with older versions of Radiant.  If you need to make this work with an older version then I'd suggest you look at an older version of the extension.
 
-1) Install the Calendar Date Select plugin with the following command:
+1) Install the Calendar Date Select plugin
 
-git clone git://github.com/timcharper/calendar_date_select.git vendor/plugins/calendar_date_select
+# install the gem
+  sudo gem install calendar_date_select
 
-OR
+# add gem dependency to environment.rb
+  config.gem "calendar_date_select"
 
-svn export http://calendardateselect.googlecode.com/svn/tags/calendar_date_select vendor/plugins/calendar_date_select
+# though optional, I recommend unpacking the gem
+  rake gems:unpack
 
 You can read more about it here:
 http://code.google.com/p/calendardateselect/ 
 
-
 2) Install the Page Event Extension
 
-If you're only 6.9 or newer:
-
 script/extension install page_event
-
-OR the old way:
-
-git clone git://github.com/mghaught/radiant-page-event.git vendor/extensions/page_event
-
-** Github has a download button that will give you a tarball of the extension.  If you don't want to use git then go this route and expand the tarball in the vendor/extensions/page_event directory of your Radiant app.
-
 
 3) run migration*
 
 rake production radiant:extensions:page_event:migrate
 
-
 4) run rake update for extension*
 
 rake radiant:extensions:page_event:update
 
-*Both 3 and 4 are unnecessary if you used the script/extension install command
+* Both 3 and 4 are unnecessary if you used the script/extension install command
 
 5) Start (or restart) your server
 
@@ -84,10 +76,3 @@ OR
 <r:event:duration />
 
 They will simply output the date or time, respectively, in a human formatted version.  The <r:date/> and <r:time/> tags accept a format attribute that specifies a strftime pattern for formatting the date or time.
-
-
-
-
-FUTURE RELEASES
-
-In the immediate future, I will focus styling and bug fixes.  There are several refactoring opportunities as well as UI enhancements on both sides that might happen.  The biggest change I'm anticipating is upgrading the event data from a simple timestamp to a true model with time ranges.  Feedback welcome!
